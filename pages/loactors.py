@@ -1,1 +1,0 @@
-# a.sbisru-Header__menu-link[href="/contacts"] - Контакты в хэдэре

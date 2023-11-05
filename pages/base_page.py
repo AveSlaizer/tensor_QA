@@ -1,5 +1,6 @@
 from selenium.common import NoSuchElementException
 from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.remote.webelement import WebElement
 
 
 class BasePage:
@@ -8,9 +9,20 @@ class BasePage:
         self.url = url
         self.browser.implicitly_wait(time_to_wait=time_out)
 
+    @staticmethod
+    def get_image_size(image: WebElement) -> tuple[str, str]:
+        return image.get_attribute("width"), image.get_attribute("height")
+
+    @staticmethod
+    def images_should_have_same_size(images):
+        sizes_set = set()
+        for image in images:
+            sizes_set.add(BasePage.get_image_size(image))
+        assert len(sizes_set) == 1, f"Images have {len(sizes_set)} different sizes!"
+
     def is_element_present(self, by: str, value: str):
         try:
-            self.browser.find_element(by, value)
+            element = self.browser.find_element(by, value)
         except NoSuchElementException:
             return False
         return True
