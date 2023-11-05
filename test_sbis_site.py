@@ -31,3 +31,38 @@ class TestScenarioOne:
         page.should_be_block_named_working()
         images = page.find_images_in_block_working()
         page.images_should_have_same_size(images)
+
+
+class TestScenarioTwo:
+    partner_list_to_check: list
+
+    @classmethod
+    def setup_class(cls):
+        cls.partner_list_to_check = []
+        cls.current_region_verbose_name = 'Ярославская'
+        cls.region_name_in_url = 'kamchatskij-kraj'
+        cls.region_verbose_name = 'Камчатский край'
+
+    def test_guest_can_go_to_sbis_contacts_page(self, browser):
+        page = SbisPage(browser, SbisPage.url)
+        page.open()
+        page.go_to_contacts()
+
+    def test_guest_can_see_region_name_element(self, browser):
+        page = SbisContactsPage(browser, browser.current_url)
+        page.check_region_name_element(self.current_region_verbose_name)
+
+    def test_guest_can_see_list_of_partners(self, browser):
+        page = SbisContactsPage(browser, browser.current_url)
+        self.partner_list_to_check = page.should_see_partner_list()
+
+    def test_guest_can_change_region(self, browser):
+        page = SbisContactsPage(browser, browser.current_url)
+        page.change_region(self.region_verbose_name)
+
+    def test_region_was_changed(self, browser):
+        page = SbisContactsPage(browser, browser.current_url)
+        page.check_region_name_element(self.region_verbose_name)
+        page.is_symbols_in_current_url(self.region_name_in_url)
+        new_partner_list = page.should_see_partner_list()
+        page.is_element_lists_are_different(self.partner_list_to_check, new_partner_list)

@@ -20,6 +20,10 @@ class BasePage:
             sizes_set.add(BasePage.get_image_size(image))
         assert len(sizes_set) == 1, f"Images have {len(sizes_set)} different sizes!"
 
+    @staticmethod
+    def is_element_lists_are_different(first__element_list: list, second_element_list: list):
+        assert first__element_list != second_element_list, "Element lists are the same!"
+
     def is_element_present(self, by: str, value: str):
         try:
             element = self.browser.find_element(by, value)
@@ -29,7 +33,7 @@ class BasePage:
 
     def is_symbols_in_current_url(self, symbols: str):
         current_url = self.browser.current_url
-        assert current_url.find(symbols) != -1
+        assert current_url.find(symbols) != -1, f"'{symbols}' not in current url!"
 
     def open(self):
         self.browser.get(self.url)
