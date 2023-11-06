@@ -16,6 +16,9 @@ class SbisDownloadsPage(BasePage):
     __file_name: str
 
     def download_sbis_plugin_for_windows_installer(self):
+        """
+        Скачивает вэб установщик плагина для Windows. Проверяет, что он действительно скачался.
+        """
         time.sleep(0.5)  # Со слипом работает стабильней
         plugin_category_link = self.browser.find_element(*SbisDownloadsLocators.SBIS_PLUGIN_CATEGORY)
         plugin_category_link.click()
@@ -46,17 +49,30 @@ class SbisDownloadsPage(BasePage):
         self.__is_file_downloaded()
 
     def is_file_sizes_on_page_and_disk_in_megabytes_same(self):
+        """
+        Проверяет, что размер файла отображаемый на сайте равен размеру файла да диске после скачивания.
+        Иначе AssertionError
+        """
         size_on_disk = self.__get_rounded_file_size_in_megabytes_from_bytes()
-        assert size_on_disk == float(self.__file_size_on_page), \
+        assert size_on_disk == self.__file_size_on_page, \
             f"Error! File size on disk: '{size_on_disk} Mb', file size on page: '{self.__file_size_on_page} Mb'."
 
     def __get_rounded_file_size_in_megabytes_from_bytes(self):
+        """
+        Возвращает округленный до 2-х знаков размер файла на диске в мегабайтах
+        :return: float Размер файла
+        """
         stats = os.stat(self.__downloads_directory + self.__file_name)
         rounded_size_in_mega_bytes = round((stats.st_size / 1048576), 2)
         return rounded_size_in_mega_bytes
 
     @staticmethod
-    def __get_file_size_from_link_visible_text(link_visible_text: str) -> str:
+    def __get_file_size_from_link_visible_text(link_visible_text: str) -> float:
+        """
+        Возвращает размер файла, отображаемый в тексте на странице сайта.
+        :param link_visible_text:
+        :return:
+        """
         file_size = ''
 
         for symbol in link_visible_text:
@@ -73,8 +89,11 @@ class SbisDownloadsPage(BasePage):
             while ".." in file_size:
                 file_size = file_size.replace("..", ".")
 
-        return file_size
+        return float(file_size)
 
     def __is_file_downloaded(self):
+        """
+        Вызывает AssertionError, если файл не найден в директории (не был скачан)
+        """
         file_list = os.listdir(self.__downloads_directory)
         assert self.__file_name in file_list, f"'{self.__file_name}' not founded in '{self.__downloads_directory}'!"

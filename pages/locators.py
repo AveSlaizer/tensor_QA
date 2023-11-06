@@ -2,6 +2,9 @@ from selenium.webdriver.common.by import By
 
 
 class SbisLocators:
+    """
+    Локаторы для страницы "https://sbis.ru/"
+    """
     # Ссылка "Контакты" в хэдэре
     HEADER_CONTACTS_LINK = (
         By.CSS_SELECTOR, 'a.sbisru-Header__menu-link[href="/contacts"]'
@@ -14,6 +17,9 @@ class SbisLocators:
 
 
 class SbisContactsLocators:
+    """
+    Локаторы для страницы "https://sbis.ru/contacts/"
+    """
     # Баннер "Тензор"
     TENSOR_BANNER = (
         By.CSS_SELECTOR,
@@ -41,6 +47,9 @@ class SbisContactsLocators:
 
 
 class SbisDownloadsLocators:
+    """
+    Локаторы для страницы "https://sbis.ru/download"
+    """
     # Ссылка выбора категории "СБИС Плагин"
     SBIS_PLUGIN_CATEGORY = (
         By.CSS_SELECTOR,
@@ -59,6 +68,9 @@ class SbisDownloadsLocators:
 
 
 class TensorPageLocators:
+    """
+    Локаторы для страницы 'https://tensor.ru/'
+    """
     # Блок "Сила в людях"
     STRENGTH_IN_PEOPLE_BLOCK = (
         By.XPATH,
@@ -72,6 +84,9 @@ class TensorPageLocators:
 
 
 class TensorAboutPageLocators:
+    """
+    Локаторы для страницы "https://tensor.ru/about"
+    """
     # Блок "Работаем"
     BLOCK_NAMED_WORKING_TITLE = (
         By.XPATH,
