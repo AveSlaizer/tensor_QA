@@ -12,7 +12,7 @@ from .locators import SbisDownloadsLocators
 class SbisDownloadsPage(BasePage):
     url = "https://sbis.ru/download"
     __downloads_directory = os.getcwd() + '\\downloads\\'
-    __file_size_on_page: str
+    __file_size_on_page: float
     __file_name: str
 
     def download_sbis_plugin_for_windows_installer(self):
