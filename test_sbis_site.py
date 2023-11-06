@@ -2,6 +2,7 @@ from pages.sbis import SbisPage
 from pages.sbis_contacts import SbisContactsPage
 from pages.tensor import TensorPage
 from pages.tensor_about import TensorAboutPage
+from pages.sbis_downloads import SbisDownloadsPage
 
 
 class TestScenarioOne:
@@ -66,3 +67,15 @@ class TestScenarioTwo:
         page.is_symbols_in_current_url(self.region_name_in_url)
         new_partner_list = page.should_see_partner_list()
         page.is_element_lists_are_different(self.partner_list_to_check, new_partner_list)
+
+
+class TestScenarioThree:
+    def test_guest_can_go_to_downloads_page(self, browser):
+        page = SbisPage(browser, SbisPage.url)
+        page.open()
+        page.go_to_downloads()
+
+    def test_guest_can_download_sbis_plugin_for_windows(self, browser):
+        page = SbisDownloadsPage(browser, browser.current_url)
+        page.download_sbis_plugin_for_windows_installer()
+        page.is_file_sizes_on_page_and_disk_in_megabytes_same()

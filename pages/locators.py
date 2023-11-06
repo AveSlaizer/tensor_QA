@@ -6,6 +6,11 @@ class SbisLocators:
     HEADER_CONTACTS_LINK = (
         By.CSS_SELECTOR, 'a.sbisru-Header__menu-link[href="/contacts"]'
     )
+    # ССылка "Скачать СБИС" в футере
+    DOWNLOAD_SBIS_FOOTER_LINK = (
+        By.XPATH,
+        '//a[text()="Скачать СБИС"]'
+    )
 
 
 class SbisContactsLocators:
@@ -33,6 +38,24 @@ class SbisContactsLocators:
         :return: tuple: метод поиска и значение, по которому искать.
         """
         return By.CSS_SELECTOR, f'span[title="{region_verbose_name}"]'
+
+
+class SbisDownloadsLocators:
+    # Ссылка выбора категории "СБИС Плагин"
+    SBIS_PLUGIN_CATEGORY = (
+        By.CSS_SELECTOR,
+        'div[data-id="plugin"]'
+    )
+    # Ссылка выбора установщиков плагина для Windows
+    SBIS_PLUGIN_FOR_WINDOW = (
+        By.CSS_SELECTOR,
+        'div[data-for="plugin"] div[data-id="default"]'
+    )
+    # Ссылка на файл СБИС плагин для Windows
+    SBIS_PLAUGIN_FOR_WINDOWS_DOWNLOAD_LINK = (
+        By.CSS_SELECTOR,
+        'a[href="https://update.sbis.ru/Sbis3Plugin/master/win32/sbisplugin-setup-web.exe"]'
+    )
 
 
 class TensorPageLocators:

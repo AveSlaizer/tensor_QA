@@ -25,7 +25,7 @@ def browser(request):
 
     if browser_name in supported_browsers:
         browser = supported_browsers.get(browser_name)()
-        browser.set_window_size(1800, 1000)
+        browser.maximize_window()
         print(f"\nStart {browser_name} browser for test..")
     else:
         joined_browsers = ', '.join(supported_browsers.keys())
